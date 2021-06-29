@@ -32,79 +32,117 @@ def get_all_projects():
     return {"PROJECTS": db}
 
 
-@app.route("/projects", methods=["POST"])
+@app.route("/projects/add", methods=["GET", "POST"])
 def add_project():
-    __OBJECTID = request.form.get("__OBJECTID")
-    Budget = request.form.get("Budget")
-    C02e_To_Date = request.form.get("C02e_To_Date")
-    Description = request.form.get("Description")
-    DirectBeneficiaries_HH = request.form.get("DirectBeneficiaries_HH")
-    District = request.form.get("District")
-    Donor_Principal = request.form.get("Donor_Principal")
-    Donors_Other = request.form.get("Donors_Other")
-    End_Year = request.form.get("End_Year")
-    Implementing_Partners = request.form.get("Implementing_Partners")
-    InDirectBeneficiaries_HH = request.form.get("InDirectBeneficiaries_HH")
-    Land_Area = request.form.get("Land_Area")
-    Logo = request.form.get("Logo")
-    Men_Trained = request.form.get("Men_Trained")
-    Nation = request.form.get("Nation")
-    Organisation = request.form.get("Organisation")
-    People_Trained = request.form.get("People_Trained")
-    Practice = request.form.get("Practice")
-    Proj_Code = request.form.get("Proj_Code")
-    Proj_Currency = request.form.get("Proj_Currency")
-    Proj_Status = request.form.get("Proj_Status")
-    Project_Description = request.form.get("Project_Description")
-    Project_Value = request.form.get("Project_Value")
-    Site_Code = request.form.get("Site_Code")
-    Start_Year = request.form.get("Start_Year")
-    Tree_Density = request.form.get("Tree_Density")
-    Trees_mgmt = request.form.get("Trees_mgmt")
-    Video = request.form.get("Video")
-    x = request.form.get("x")
-    y = request.form.get("y")
 
-    if __OBJECTID:
-        new_project = {
-            __OBJECTID: {
-                "__OBJECTID": __OBJECTID,
-                "Budget": Budget,
-                "C02e_To_Date": C02e_To_Date,
-                "Description": Description,
-                "DirectBeneficiaries_HH": DirectBeneficiaries_HH,
-                "District": District,
-                "Donor_Principal": Donor_Principal,
-                "Donors_Other": Donors_Other,
-                "End_Year": End_Year,
-                "Implementing_Partners": Implementing_Partners,
-                "InDirectBeneficiaries_HH": InDirectBeneficiaries_HH,
-                "Land_Area": Land_Area,
-                "Logo": Logo,
-                "Men_Trained": Men_Trained,
-                "Nation": Nation,
-                "Organisation": Organisation,
-                "People_Trained": People_Trained,
-                "Practice": Practice,
-                "Proj_Code": Proj_Code,
-                "Proj_Currency": Proj_Currency,
-                "Proj_Status": Proj_Status,
-                "Project_Description": Project_Description,
-                "Project_Value": Project_Value,
-                "Site_Code": Site_Code,
-                "Start_Year": Start_Year,
-                "Tree_Density": Tree_Density,
-                "Trees_mgmt": Trees_mgmt,
-                "Video": Video,
-                "x": x,
-                "y": y,
-            }
-        }
+    # Handle the POST request
+    if request.method == "POST":
+        __OBJECTID = request.form.get("__OBJECTID")
+        Budget = request.form.get("Budget")
+        C02e_To_Date = request.form.get("C02e_To_Date")
+        Description = request.form.get("Description")
+        DirectBeneficiaries_HH = request.form.get("DirectBeneficiaries_HH")
+        District = request.form.get("District")
+        Donor_Principal = request.form.get("Donor_Principal")
+        Donors_Other = request.form.get("Donors_Other")
+        End_Year = request.form.get("End_Year")
+        Implementing_Partners = request.form.get("Implementing_Partners")
+        InDirectBeneficiaries_HH = request.form.get("InDirectBeneficiaries_HH")
+        Land_Area = request.form.get("Land_Area")
+        Logo = request.form.get("Logo")
+        Men_Trained = request.form.get("Men_Trained")
+        Nation = request.form.get("Nation")
+        Organisation = request.form.get("Organisation")
+        People_Trained = request.form.get("People_Trained")
+        Practice = request.form.get("Practice")
+        Proj_Code = request.form.get("Proj_Code")
+        Proj_Currency = request.form.get("Proj_Currency")
+        Proj_Status = request.form.get("Proj_Status")
+        Project_Description = request.form.get("Project_Description")
+        Project_Value = request.form.get("Project_Value")
+        Site_Code = request.form.get("Site_Code")
+        Start_Year = request.form.get("Start_Year")
+        Tree_Density = request.form.get("Tree_Density")
+        Trees_mgmt = request.form.get("Trees_mgmt")
+        Video = request.form.get("Video")
+        x = request.form.get("x")
+        y = request.form.get("y")
 
-        db[__OBJECTID] = new_project
-        return {"NEW PROJECT CREATED!": new_project}
-    else:
-        return "__OBJECTID IS REQUIRED!"
+        if __OBJECTID:
+            if __OBJECTID in db.keys():
+                return "<h1>PROJECT ID {} EXISTS!</h1>".format(__OBJECTID)
+            else:
+                new_project = {
+                    "__OBJECTID": __OBJECTID,
+                    "Budget": Budget,
+                    "C02e_To_Date": C02e_To_Date,
+                    "Description": Description,
+                    "DirectBeneficiaries_HH": DirectBeneficiaries_HH,
+                    "District": District,
+                    "Donor_Principal": Donor_Principal,
+                    "Donors_Other": Donors_Other,
+                    "End_Year": End_Year,
+                    "Implementing_Partners": Implementing_Partners,
+                    "InDirectBeneficiaries_HH": InDirectBeneficiaries_HH,
+                    "Land_Area": Land_Area,
+                    "Logo": Logo,
+                    "Men_Trained": Men_Trained,
+                    "Nation": Nation,
+                    "Organisation": Organisation,
+                    "People_Trained": People_Trained,
+                    "Practice": Practice,
+                    "Proj_Code": Proj_Code,
+                    "Proj_Currency": Proj_Currency,
+                    "Proj_Status": Proj_Status,
+                    "Project_Description": Project_Description,
+                    "Project_Value": Project_Value,
+                    "Site_Code": Site_Code,
+                    "Start_Year": Start_Year,
+                    "Tree_Density": Tree_Density,
+                    "Trees_mgmt": Trees_mgmt,
+                    "Video": Video,
+                    "x": x,
+                    "y": y,
+                }
+
+                db[__OBJECTID] = new_project
+                return {"NEW PROJECT CREATED!": {__OBJECTID: new_project}}
+        else:
+            return "<h1>__OBJECTID IS REQUIRED!</h1>"
+
+    # Otherwise handle the GET request
+    return """
+           <form method="POST">
+               <div><label>__OBJECTID: <input type="text" name="__OBJECTID"></label></div>
+               <div><label>Budget: <input type="text" name="Budget"></label></div>
+               <div><label>C02e_To_Date: <input type="text" name="C02e_To_Date"></label></div>
+               <div><label>Description: <input type="text" name="Description"></label></div>
+               <div><label>DirectBeneficiaries_HH: <input type="text" name="DirectBeneficiaries_HH"></label></div>
+               <div><label>District: <input type="text" name="District"></label></div>
+               <div><label>Donor_Principal: <input type="text" name="Donor_Principal"></label></div>
+               <div><label>Donors_Other: <input type="text" name="Donors_Other"></label></div>
+               <div><label>End_Year: <input type="text" name="End_Year"></label></div>
+               <div><label>Implementing_Partners: <input type="text" name="Implementing_Partners"></label></div>
+               <div><label>InDirectBeneficiaries_HH: <input type="text" name="InDirectBeneficiaries_HH"></label></div>
+               <div><label>Land_Area: <input type="text" name="Land_Area"></label></div>
+               <div><label>Logo: <input type="text" name="Logo"></label></div>
+               <div><label>Men_Trained: <input type="text" name="Men_Trained"></label></div>
+               <div><label>Organisation: <input type="text" name="Organisation"></label></div>
+               <div><label>People_Trained: <input type="text" name="People_Trained"></label></div>
+               <div><label>Practice: <input type="text" name="Practice"></label></div>
+               <div><label>Proj_Code: <input type="text" name="Proj_Code"></label></div>
+               <div><label>Proj_Currency: <input type="text" name="Proj_Currency"></label></div>
+               <div><label>Proj_Status: <input type="text" name="Proj_Status"></label></div>
+               <div><label>Project_Description: <input type="text" name="Project_Description"></label></div>
+               <div><label>Project_Value: <input type="text" name="Project_Value"></label></div>
+               <div><label>Site_Code: <input type="text" name="Site_Code"></label></div>
+               <div><label>Start_Year: <input type="text" name="Start_Year"></label></div>
+               <div><label>Tree_Density: <input type="text" name="Tree_Density"></label></div>
+               <div><label>Trees_mgmt: <input type="text" name="Trees_mgmt"></label></div>
+               <div><label>x: <input type="text" name="x"></label></div>
+               <div><label>y: <input type="text" name="y"></label></div>
+               <input type="submit" value="Submit">
+           </form>"""
 
 
 @app.route("/projects/<__OBJECTID>", methods=["GET"])
