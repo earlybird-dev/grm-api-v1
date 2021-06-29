@@ -20,10 +20,11 @@ with open(json_file_path) as f:
 @app.route("/")
 def index():
     return """
-                <h1>Welcome to Global Restoration Monitor API 1.0</h1>
-                <h2> Try the below endpoints:</h2>
-                <li> https://grm-api-v1.herokuapp.com/projects : Retrieve all projects.
-                <li> https://grm-api-v1.herokuapp.com/projects/projectID : Retrieve a project's information."""
+            <h1>Welcome to Global Restoration Monitor API 1.0</h1>
+            <h2> Try the below endpoints:</h2>
+            <li> <a href="https://grm-api-v1.herokuapp.com/projects">Retrieve all projects.</a>
+            <li> <a href="https://grm-api-v1.herokuapp.com/projects/1">Retrieve a project's information given the project ID.</a>
+            """
 
 
 @app.route("/projects", methods=["GET"])
