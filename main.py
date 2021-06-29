@@ -22,8 +22,8 @@ def index():
     return """
                 <h1>Welcome to Global Restoration Monitor API 1.0</h1>
                 <h2> Try the below endpoints:</h2>
-                <li> .../projects : Retrieve all projects.
-                <li> .../projects/projectID : Retrieve a project's information."""
+                <li> https://grm-api-v1.herokuapp.com/projects : Retrieve all projects.
+                <li> https://grm-api-v1.herokuapp.com/projects/projectID : Retrieve a project's information."""
 
 
 @app.route("/projects", methods=["GET"])
