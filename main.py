@@ -113,7 +113,7 @@ def add_project():
     # Otherwise handle the GET request
     return """
            <form method="POST">
-               <div><label>__OBJECTID: <input type="text" name="__OBJECTID"></label></div>
+               <div><label>__OBJECTID (*): <input type="text" name="__OBJECTID"></label></div>
                <div><label>Budget: <input type="text" name="Budget"></label></div>
                <div><label>C02e_To_Date: <input type="text" name="C02e_To_Date"></label></div>
                <div><label>Description: <input type="text" name="Description"></label></div>
@@ -241,48 +241,33 @@ def delete_project(__OBJECTID):
         return "<h1>PROJECT ID {} IS NOT FOUND!</h1>".format(__OBJECTID)
 
 
-@app.route("/query-example")
+@app.route("/projects/query")
 def query_example():
-    # if key doesn't exist, returns None
-    language = request.args.get("language")
+    # If key doesn't exist, returns None
+    Nation = request.args.get("Nation")
+    Organisation = request.args.get("Organisation")
+    Donor_Principal = request.args.get("Donor_Principal")
 
-    # if key doesn't exist, returns a 400, bad request error
-    framework = request.args["framework"]
+    output_1 = db.copy()
+    if Nation is not None:
+        for k, v in db.items():
+            if v["Nation"] != Nation:
+                del output_1[k]
+    output_2 = output_1.copy()
+    if Organisation is not None:
+        for k, v in output_1.items():
+            if v["Organisation"] != Organisation:
+                del output_2[k]
+    output_3 = output_2.copy()
+    if Donor_Principal is not None:
+        for k, v in output_2.items():
+            if v["Donor_Principal"] != Donor_Principal:
+                del output_3[k]
 
-    # if key doesn't exist, returns None
-    website = request.args.get("website")
-
-    return """
-              <h1>The language value is: {}</h1>
-              <h1>The framework value is: {}</h1>
-              <h1>The website value is: {}""".format(
-        language, framework, website
-    )
+    return {"Project List": list(output_3.keys())}
 
 
-# http://127.0.0.1:5000/query-example?language=Python&framework=Flask&website=DigitalOcean
-
-# allow both GET and POST requests
-@app.route("/form-example", methods=["GET", "POST"])
-def form_example():
-    # handle the POST request
-    if request.method == "POST":
-        language = request.form.get("language")
-        framework = request.form.get("framework")
-        return """
-                <h1>The language value is: {}</h1>
-                <h1>The framework value is: {}</h1>""".format(
-            language, framework
-        )
-
-    # otherwise handle the GET request
-    return """
-           <form method="POST">
-               <div><label>Language: <input type="text" name="language"></label></div>
-               <div><label>Framework: <input type="text" name="framework"></label></div>
-               <input type="submit" value="Submit">
-           </form>"""
-
+# http://127.0.0.1:5000/query?Nation=Ethiopia&Organisation=...&Donor_Principal=...
 
 if __name__ == "__main__":
     app.run(debug=True)
