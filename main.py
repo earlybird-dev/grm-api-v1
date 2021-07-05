@@ -21,9 +21,7 @@ with open(json_file_path) as f:
 def index():
     return """
             <h1>Welcome to Global Restoration Monitor API 1.0</h1>
-            <h2> Try the below endpoints:</h2>
-            <li> <a href="https://grm-api-v1.herokuapp.com/projects">Retrieve all projects.</a>
-            <li> <a href="https://grm-api-v1.herokuapp.com/projects/1">Retrieve a project's information given the project ID.</a>
+            <h2>API Documentation: <a href="https://grm-api-testing.stoplight.io/docs/grm-api-v1-0/">https://grm-api-testing.stoplight.io/docs/grm-api-v1-0/</h2>
             """
 
 
@@ -37,7 +35,7 @@ def add_project():
 
     # Handle the POST request
     if request.method == "POST":
-        __OBJECTID = request.form.get("__OBJECTID")
+        Project_ID = request.form.get("Project_ID")
         Budget = request.form.get("Budget")
         C02e_To_Date = request.form.get("C02e_To_Date")
         Description = request.form.get("Description")
@@ -68,12 +66,12 @@ def add_project():
         x = request.form.get("x")
         y = request.form.get("y")
 
-        if __OBJECTID:
-            if __OBJECTID in db.keys():
-                return "<h1>PROJECT ID {} EXISTS!</h1>".format(__OBJECTID)
+        if Project_ID:
+            if Project_ID in db.keys():
+                return "<h1>PROJECT ID {} EXISTS!</h1>".format(Project_ID)
             else:
                 new_project = {
-                    "__OBJECTID": __OBJECTID,
+                    "Project_ID": Project_ID,
                     "Budget": Budget,
                     "C02e_To_Date": C02e_To_Date,
                     "Description": Description,
@@ -105,15 +103,15 @@ def add_project():
                     "y": y,
                 }
 
-                db[__OBJECTID] = new_project
-                return {"NEW PROJECT CREATED!": {__OBJECTID: new_project}}
+                db[Project_ID] = new_project
+                return {"NEW PROJECT CREATED!": {Project_ID: new_project}}
         else:
-            return "<h1>__OBJECTID IS REQUIRED!</h1>"
+            return "<h1>Project_ID IS REQUIRED!</h1>"
 
     # Otherwise handle the GET request
     return """
            <form method="POST">
-               <div><label>__OBJECTID (*): <input type="text" name="__OBJECTID"></label></div>
+               <div><label>Project_ID (*): <input type="text" name="Project_ID"></label></div>
                <div><label>Budget: <input type="text" name="Budget"></label></div>
                <div><label>C02e_To_Date: <input type="text" name="C02e_To_Date"></label></div>
                <div><label>Description: <input type="text" name="Description"></label></div>
@@ -145,17 +143,17 @@ def add_project():
            </form>"""
 
 
-@app.route("/projects/<__OBJECTID>", methods=["GET"])
-def get_project(__OBJECTID):
-    if __OBJECTID in db.keys():
-        return {__OBJECTID: db[__OBJECTID]}
+@app.route("/projects/<Project_ID>", methods=["GET"])
+def get_project(Project_ID):
+    if Project_ID in db.keys():
+        return {Project_ID: db[Project_ID]}
     else:
-        return "<h1>PROJECT ID {} IS NOT FOUND!</h1>".format(__OBJECTID)
+        return "<h1>PROJECT ID {} IS NOT FOUND!</h1>".format(Project_ID)
 
 
-@app.route("/projects/<__OBJECTID>", methods=["PUT"])
-def update_project(__OBJECTID):
-    if __OBJECTID in db.keys():
+@app.route("/projects/<Project_ID>", methods=["PUT"])
+def update_project(Project_ID):
+    if Project_ID in db.keys():
         Budget = request.form.get("Budget")
         C02e_To_Date = request.form.get("C02e_To_Date")
         Description = request.form.get("Description")
@@ -221,24 +219,24 @@ def update_project(__OBJECTID):
         updated_dict = {}
         for k, v in updates.items():
             if v:
-                db[__OBJECTID][k] = v
+                db[Project_ID][k] = v
                 updated_dict[k] = v
         return {
             "UPDATED!": updated_dict,
-            "PROJECT": {__OBJECTID: db[__OBJECTID]},
+            "PROJECT": {Project_ID: db[Project_ID]},
         }
     else:
-        return "<h1>PROJECT ID {} IS NOT FOUND!</h1>".format(__OBJECTID)
+        return "<h1>PROJECT ID {} IS NOT FOUND!</h1>".format(Project_ID)
 
 
-@app.route("/projects/<__OBJECTID>", methods=["DELETE"])
-def delete_project(__OBJECTID):
-    if __OBJECTID in db.keys():
-        project_removed = db[__OBJECTID]
-        del db[__OBJECTID]
-        return {"PROJECT REMOVED": {__OBJECTID: project_removed}}
+@app.route("/projects/<Project_ID>", methods=["DELETE"])
+def delete_project(Project_ID):
+    if Project_ID in db.keys():
+        project_removed = db[Project_ID]
+        del db[Project_ID]
+        return {"PROJECT REMOVED": {Project_ID: project_removed}}
     else:
-        return "<h1>PROJECT ID {} IS NOT FOUND!</h1>".format(__OBJECTID)
+        return "<h1>PROJECT ID {} IS NOT FOUND!</h1>".format(Project_ID)
 
 
 @app.route("/projects/query")
