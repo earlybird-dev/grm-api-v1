@@ -20,13 +20,20 @@ with open(json_file_path) as f:
 @app.route("/")
 def index():
     return """
-            <h1>Welcome to Global Restoration Monitor API 1.0</h1>
+            <h1>Welcome to Global Restoration Monitor API 1.1</h1>
             <h2>API Documentation: <a href="https://grm-api-testing.stoplight.io/docs/grm-api-v1-0/">https://grm-api-testing.stoplight.io/docs/grm-api-v1-0/</h2>
             """
 
 
 @app.route("/projects", methods=["GET"])
-def get_all_projects():
+def get_project():
+    Project_ID = request.args.get("id")
+    if Project_ID:
+        if Project_ID in db.keys():
+            return db[Project_ID]
+        else:
+            return "<h1>PROJECT ID {} IS NOT FOUND!</h1>".format(Project_ID)
+
     return {"PROJECTS": db}
 
 
@@ -141,14 +148,6 @@ def add_project():
                <div><label>y: <input type="text" name="y"></label></div>
                <input type="submit" value="Submit">
            </form>"""
-
-
-@app.route("/projects/<Project_ID>", methods=["GET"])
-def get_project(Project_ID):
-    if Project_ID in db.keys():
-        return {Project_ID: db[Project_ID]}
-    else:
-        return "<h1>PROJECT ID {} IS NOT FOUND!</h1>".format(Project_ID)
 
 
 @app.route("/projects/<Project_ID>", methods=["PUT"])
@@ -271,6 +270,6 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 # Run flask app on the cmd line
-# set FLASK_APP=REST_API.py
+# set FLASK_APP=main.py
 # set FLASK_DEBUG=1
 # flask run
