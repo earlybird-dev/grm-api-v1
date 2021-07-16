@@ -26,7 +26,7 @@ def index():
 
 
 @app.route("/projects", methods=["GET"])
-def get_project():
+def get_projects():
     Project_ID = request.args.get("id")
     if Project_ID:
         if Project_ID in db.keys():
@@ -148,6 +148,14 @@ def add_project():
                <div><label>y: <input type="text" name="y"></label></div>
                <input type="submit" value="Submit">
            </form>"""
+
+
+@app.route("/projects/<Project_ID>", methods=["GET"])
+def get_project(Project_ID):
+    if Project_ID in db.keys():
+        return db[Project_ID]
+    else:
+        return "<h1>PROJECT ID {} IS NOT FOUND!</h1>".format(Project_ID)
 
 
 @app.route("/projects/<Project_ID>", methods=["PUT"])
