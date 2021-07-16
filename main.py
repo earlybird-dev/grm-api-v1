@@ -150,14 +150,6 @@ def add_project():
            </form>"""
 
 
-@app.route("/projects/<Project_ID>", methods=["GET"])
-def get_project(Project_ID):
-    if Project_ID in db.keys():
-        return db[Project_ID]
-    else:
-        return "<h1>PROJECT ID {} IS NOT FOUND!</h1>".format(Project_ID)
-
-
 @app.route("/projects/<Project_ID>", methods=["PUT"])
 def update_project(Project_ID):
     if Project_ID in db.keys():
@@ -272,7 +264,7 @@ def query_example():
     return {"Project List": list(output_3.keys())}
 
 
-# http://127.0.0.1:5000/query?Nation=Ethiopia&Organisation=...&Donor_Principal=...
+# http://127.0.0.1:5000/projects/query?Nation=Ethiopia&Organisation=CRS&Donor_Principal=EU
 
 if __name__ == "__main__":
     app.run(debug=True)
