@@ -1,5 +1,10 @@
+# Run flask app on the cmd line
+# set FLASK_APP=main.py
+# set FLASK_DEBUG=1
+# flask run
+
 import json
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -19,30 +24,7 @@ with open(json_file_path) as f:
 
 @app.route("/")
 def index():
-    return """
-            <html>
-
-            <head>
-            <title>Global Restoration Monitor API</title>
-            </head>
-
-            <body>
-            <h1>Welcome to Global Restoration Monitor API 1.0</h1>
-            <img src="https://media2.giphy.com/media/RlOwVBqQRrNWU/100.webp?cid=ecf05e470agrfv6cr6up5ubkrptcsteham8xiap1kf04qo60&rid=100.webp&ct=g" id="forest" alt="" />
-
-            <h2>Try out some endpoints:</h2> 
-            <li> Retrieve all projects: <a href="https://grm-api-v1.herokuapp.com/projects" target="_blank"> https://grm-api-v1.herokuapp.com/projects</a></li>
-            <li> Retrieve a project: <a href="https://grm-api-v1.herokuapp.com/projects?id=1" target="_blank"> https://grm-api-v1.herokuapp.com/projects?id=1</a></li>
-            <li> Create a project: <a href="https://grm-api-v1.herokuapp.com/projects/add" target="_blank"> https://grm-api-v1.herokuapp.com/projects/add</a></li>
-            <li> Filter projects: <a href="https://grm-api-v1.herokuapp.com/projects/query?Nation=Ethiopia&Organisation=CRS&Donor_Principal=EU" target="_blank"> https://grm-api-v1.herokuapp.com/projects/query?Nation=Ethiopia&Organisation=CRS&Donor_Principal=EU</a></li>
-
-            <h2>API Documentation</h2> 
-            <li><a href="https://grm-api-testing.stoplight.io/docs/grm-api-v1-0/" target="_blank">https://grm-api-testing.stoplight.io/docs/grm-api-v1-0/</a></li>
-
-
-            </body>
-            </html>
-            """
+    return render_template('index.html')
 
 
 @app.route("/projects", methods=["GET"])
