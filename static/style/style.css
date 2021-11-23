@@ -1,9 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap");
 body {
     height: 100vh;
     /* display: flex; */
     /* align-items: center; */
     background: linear-gradient(to top left, #28b487, #7dd56f);
-    font-family: proxima-nova, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-family: "Press Start 2P", cursive;
     /* box-sizing: border-box; */
     padding: 0;
     margin: 0;
@@ -12,24 +13,23 @@ body {
 .banner {
     display: flex;
     justify-content: center;
-    padding: 50px;
+    padding-top: 50px;
 }
 
-
-/* h1 {
-    font-size: 40px;
+h1 {
+    font-size: 30px;
     line-height: 1.3;
     padding: 30px;
-    margin: 50px;
+    /* margin: 0px; */
     text-align: center;
     color: white;
     text-transform: uppercase;
-} */
+}
 
 h2 {
     display: flex;
-    font-size: 30px;
-    /* width: max-content; */
+    font-size: 25px;
+    line-height: 1.6;
     width: 50%;
     padding: 30px;
     margin: auto;
@@ -57,10 +57,12 @@ h2 {
 }
 
 .endpoint-box {
-    font-size: 15px;
+    font-size: 12px;
     width: 20%;
     height: 150px;
     max-height: min-content;
+    line-height: 1.2;
+    font-weight: 50;
     padding: 10px;
     margin: auto;
     text-align: center;
